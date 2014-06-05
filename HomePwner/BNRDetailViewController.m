@@ -37,8 +37,46 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    NSLog(@"--BNRDetailViewController %@", NSStringFromSelector(_cmd));
     
-    NSLog(@"--BNRDetailViewController viewDidLoad");
+    UIImageView *iv = [[UIImageView alloc] initWithImage:nil];
+    
+    // set contentMode of image view
+    iv.contentMode = UIViewContentModeScaleAspectFit;
+    
+    // do NOT produce a translated constraint for this view
+    iv.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    // the image view was a subview of the view
+    [self.view addSubview:iv];
+    
+    // the image view was pointed to by imageView property
+    self.imageView = iv;
+    
+    // set vertical priorties to be less than those of the other subviews
+    [self.imageView setContentHuggingPriority:200
+                                      forAxis:UILayoutConstraintAxisVertical];
+    [self.imageView setContentCompressionResistancePriority:700
+                                                    forAxis:UILayoutConstraintAxisVertical];
+    
+    NSDictionary *nameMap = @{@"imageView":self.imageView,
+                              @"dateLabel":self.dateLabel,
+                              @"toolbar":self.toolbar};
+    
+    // imageView is 0 pts from superview at left and right edges
+    NSArray *horizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[imageView]-0-|"
+                                                                             options:0
+                                                                             metrics:nil
+                                                                               views:nameMap];
+    // imageView is 8 pts from dateLabel at its top edge
+    // and 8 pts from toolbar at its bottom edge
+    NSArray *verticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[dateLabel]-[imageView]-[toolbar]"
+                                                                           options:0
+                                                                           metrics:nil
+                                                                             views:nameMap];
+    
+    [self.view addConstraints:horizontalConstraints];
+    [self.view addConstraints:verticalConstraints];
 }
 
 - (void)viewWillAppear:(BOOL)animated
