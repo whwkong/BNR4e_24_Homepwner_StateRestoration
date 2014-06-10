@@ -20,10 +20,11 @@
 {
     static BNRImageStore *imageStore = nil;
     
-    if (!imageStore)
-    {
-        imageStore = [[BNRImageStore alloc] initPrivate];
-    }
+    // thread-safe singleton
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        imageStore = [[self alloc] initPrivate];
+    });
     
     return imageStore;
 }
