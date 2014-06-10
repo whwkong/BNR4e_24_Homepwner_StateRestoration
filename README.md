@@ -43,3 +43,5 @@ Chapter 17 covers the following :
 - Rotation Notification 
 - UIPopoverController
 - Presenting modal view controllers
+- completion blocks
+
