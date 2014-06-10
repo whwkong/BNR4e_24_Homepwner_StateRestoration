@@ -8,6 +8,7 @@
 
 #import "BNRDetailViewController.h"
 #import "BNRItem.h"
+#import "BNRItemStore.h"
 #import "BNRImageStore.h"
 
 @interface BNRDetailViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate,
@@ -30,10 +31,32 @@
 #pragma mark - Controller life cycle
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    @throw [NSException exceptionWithName:@"Wrong initializer"
+                                   reason:@"Use initForNewItem"
+                                 userInfo:nil];
+    return nil;
+}
+
+// if isNew is YES, then "Cancel" and "Done" button are added as the left and right bar button items
+// to the navigation bar.
+- (instancetype)initForNewItem:(BOOL) isNew
+{
+    self = [super initWithNibName:nil bundle:nil];
     if (self) {
-        // Custom initialization
+        if (isNew) {
+            UIBarButtonItem *cancelItem = [[UIBarButtonItem alloc]
+                                           initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
+                                           target:self
+                                           action:@selector(cancel:)];
+            self.navigationItem.leftBarButtonItem = cancelItem;
+            
+            UIBarButtonItem *doneItem = [[UIBarButtonItem alloc]
+                                         initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                                         target:self action:@selector(save:)];
+            self.navigationItem.rightBarButtonItem = doneItem;
+        }
     }
+    
     return self;
 }
 
@@ -207,6 +230,22 @@
 {
     // use to make the view or any subview that is the first responder resign
     [self.view endEditing:YES];
+}
+
+- (void)save:(id)sender
+{
+    [self.presentingViewController dismissViewControllerAnimated:YES
+                                                      completion:nil];
+}
+
+- (void)cancel:(id)sender
+{
+    // if user canceled, then remove BNRItem from store
+    [[BNRItemStore sharedStore] removeItem:self.item];
+    
+    [self.presentingViewController dismissViewControllerAnimated:YES
+                                                      completion:nil];
+    
 }
 
 #pragma mark - ImagePickerController delegate

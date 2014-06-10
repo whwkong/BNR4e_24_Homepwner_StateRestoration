@@ -74,15 +74,14 @@
 {
     // Create new BNRItem and add it to store
     BNRItem *newItem = [[BNRItemStore sharedStore] createItem];
-    // Determine index of last item in the array
-    NSInteger lastRow = [[[BNRItemStore sharedStore] allItems] indexOfObject:newItem];
     
-    // Make new index path for Section 0, last row
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:lastRow inSection:0];
+    BNRDetailViewController *detailViewController = [[BNRDetailViewController alloc] initForNewItem:YES];
     
-    // insert this new row into table
-    [self.tableView insertRowsAtIndexPaths:@[indexPath]
-                          withRowAnimation:UITableViewRowAnimationTop];
+    detailViewController.item = newItem;
+    UINavigationController *navController = [[UINavigationController alloc]
+                                             initWithRootViewController:detailViewController];
+    
+    [self presentViewController:navController animated:YES completion:nil];
 }
 
 #pragma mark - TableViewDataSource delegates
@@ -140,7 +139,7 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
 - (void)tableView:(UITableView *)tableView
 didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    BNRDetailViewController *dvc = [[BNRDetailViewController alloc] init];
+    BNRDetailViewController *dvc = [[BNRDetailViewController alloc] initForNewItem:NO];
     
     
     NSArray *items = [[BNRItemStore sharedStore] allItems];
