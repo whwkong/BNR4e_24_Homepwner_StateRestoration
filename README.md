@@ -17,6 +17,7 @@ chapter's commits would not be kept  with each new chapter.
 Henceforth, starting with Ch17, I am keeping the repos from each successive 
 chapter; each chapter's 'release' will be tagged.
 
+-----------------------------------
 Tagging Conventions: 
 
 Commits that correspond to the completion of a chapter will be tagged 0.4.x, 
@@ -26,4 +27,6 @@ where x is the chapter number, and 4 represents the 4th edition of BNR.
 
 Chapter 17 covers the following :
 
+- Rotation Notification 
+- UIPopoverController
 

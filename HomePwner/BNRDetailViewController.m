@@ -10,7 +10,10 @@
 #import "BNRItem.h"
 #import "BNRImageStore.h"
 
-@interface BNRDetailViewController ()
+@interface BNRDetailViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate,
+                                       UITextFieldDelegate, UIPopoverControllerDelegate>
+
+@property (strong, nonatomic) UIPopoverController *imagePickerPopover;
 @property (weak, nonatomic) IBOutlet UITextField *nameField;
 @property (weak, nonatomic) IBOutlet UITextField *serialNumberField;
 @property (weak, nonatomic) IBOutlet UITextField *valueField;
@@ -161,6 +164,17 @@
 // handler for camera button
 - (IBAction)takePicture:(id)sender
 {
+    // note - this code block below may be unnecessary
+    // was originally added so that if the UIPopoverController was visible, and the user taps on the
+    // camera button again, the app crashed.  But this is no longer the case ...
+    if ([self.imagePickerPopover isPopoverVisible]) {
+        // popover is already up, so dismiss it
+        NSLog(@"takePicture: manually dismissing popover");
+        [self.imagePickerPopover dismissPopoverAnimated:YES];
+        self.imagePickerPopover = nil;
+        return;
+    }
+    
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc]init];
     
     // if device has a camera, take a pictre, otherwise, pick from photo library
@@ -172,7 +186,20 @@
     
     imagePicker.delegate = self;
     // place image picker on screen
-    [self presentViewController:imagePicker animated:YES completion:nil];
+    // check for iPad before instantiating popover controller
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        // create popover controller that displays imagePicker
+        self.imagePickerPopover = [[UIPopoverController alloc] initWithContentViewController:imagePicker];
+        
+        self.imagePickerPopover.delegate = self;
+        
+        // display popover controller - sender is camera bar button item
+        [self.imagePickerPopover presentPopoverFromBarButtonItem:sender
+                                        permittedArrowDirections:UIPopoverArrowDirectionAny
+                                                        animated:YES];
+    } else {
+        [self presentViewController:imagePicker animated:YES completion:nil];
+    }
 }
 
 // called whenever user taps the background
@@ -198,7 +225,23 @@
     self.imageView.image = image;
     
     // take image picker off screen; client is responsible for dismissing controller
-    [self dismissViewControllerAnimated:YES completion:nil];
+    // is there a popOver?
+    if (self.imagePickerPopover) {
+        // iPad only
+        [self.imagePickerPopover dismissPopoverAnimated:YES];
+        self.imagePickerPopover = nil;
+    } else {
+        // iPhone only
+        // dismiss modal image picker
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+}
+
+#pragma mark - PopoverController delegate
+- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
+{
+    NSLog(@"User dismissed popover");
+    self.imagePickerPopover = nil;
 }
 
 #pragma mark - TextField delegate
