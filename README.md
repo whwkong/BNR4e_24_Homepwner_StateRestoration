@@ -6,6 +6,7 @@ Ch 18 - Saving, Loading and Application States
 
 Homepwner app 
 - this app builds on the functionality of the Homepwner app from chapter 17. 
+- the app's model data is now archived - application state is now preserved.    
 
 -----------------------------------
 Tagging Conventions: 
@@ -17,4 +18,6 @@ where x is the chapter number, and 4 represents the 4th edition of BNR.
 
 Chapter 18 covers the following :
 
+- Archiving, NSKeyedArchiver and NSKeyedUnarchiver
+- Constructing File Paths and the Application Sandbox
 

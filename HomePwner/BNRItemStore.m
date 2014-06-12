@@ -48,7 +48,15 @@
 {
     self = [super init];
     
-    _privateItems = [[NSMutableArray alloc] init];
+    
+    NSString *path = [self itemArchivePath];
+    
+    _privateItems = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+    
+    // if array hadn't been saved previously, create a new empty one
+    if (_privateItems == nil) {
+        _privateItems = [[NSMutableArray alloc] init];
+    }
     
     return self;
 }
@@ -61,7 +69,7 @@
 
 -(BNRItem*) createItem
 {
-    BNRItem *item = [BNRItem randomItem];
+    BNRItem *item = [[BNRItem alloc] init];
     
     [self.privateItems addObject:item];
     
@@ -92,6 +100,27 @@
     [store deleteImageForKey:item.itemKey];
     
     [self.privateItems removeObjectIdenticalTo:item];
+}
+
+#pragma mark - Archiving methods
+- (NSString*)itemArchivePath
+{
+    NSArray *documentDirectories = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                                       NSUserDomainMask,
+                                                                       YES);
+    // get one document director from list
+    NSString *documentDirectory = [documentDirectories firstObject];
+    
+    // "items.archive" is the name of the file we're archiving to/from.
+    return [documentDirectory stringByAppendingPathComponent:@"items.archive"];
+}
+
+- (BOOL)saveChanges
+{
+    NSString *path = [self itemArchivePath];
+    
+    // return YES on success
+    return [NSKeyedArchiver archiveRootObject:self.privateItems toFile:path];
 }
 
 @end

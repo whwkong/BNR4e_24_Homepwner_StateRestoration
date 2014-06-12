@@ -50,6 +50,7 @@
 }
 
 #pragma mark - Item life cycle
+// designated initializer
 - (instancetype)initWithItemName:(NSString *)name
                   valueInDollars:(int)value
                     serialNumber:(NSString *)sNumber
@@ -94,7 +95,7 @@
     NSLog(@"Destroyed: %@", self);
 }
 
-#pragma mark
+#pragma mark - Descriptor
 - (NSString *)description
 {
     NSString *descriptionString =
@@ -105,5 +106,32 @@
          self.dateCreated];
     return descriptionString;
 }
+
+#pragma mark - NSCoding protocol
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeObject:self.itemName forKey:@"itemName"];
+    [aCoder encodeObject:self.serialNumber forKey:@"serialNumber"];
+    [aCoder encodeObject:self.dateCreated forKey:@"dateCreated"];
+    [aCoder encodeObject:self.itemKey forKey:@"itemKey"];
+    
+    [aCoder encodeInt:self.valueInDollars forKey:@"valueInDollars"];
+}
+
+- (instancetype)initWithCoder:(NSCoder*) aDecoder
+{
+    self = [super init];
+    if (self) {
+        _itemName = [aDecoder decodeObjectForKey:@"itemName"];
+        _serialNumber = [aDecoder decodeObjectForKey:@"serialNumber"];
+        _dateCreated = [aDecoder decodeObjectForKey:@"dateCreated"];
+        _itemKey = [aDecoder decodeObjectForKey:@"itemKey"];
+        
+        _valueInDollars = [aDecoder decodeIntForKey:@"valueInDollars"];
+    }
+    
+    return self;
+}
+
 
 @end
