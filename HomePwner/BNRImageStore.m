@@ -9,6 +9,7 @@
 #import "BNRImageStore.h"
 
 @interface BNRImageStore()
+- (NSString*)imagePathForKey:(NSString*) key;
 @property (nonatomic, strong) NSMutableDictionary *dictionary;
 
 @end
@@ -57,14 +58,42 @@
 {
     if (!key)
         return;
+    
     // add image to dictionary
-    [self.dictionary setObject:image forKey:key];
+    self.dictionary[key] = image;
+    
+    // create full path for image
+    NSString *imagePath = [self imagePathForKey:key];
+    
+    // Turn image into JPEG data
+    NSData *data = UIImageJPEGRepresentation(image, 0.5);
+    
+    // write image to full path
+    [data writeToFile:imagePath atomically:YES];
 }
 
 // get image
 - (UIImage*)imageForKey:(NSString*)key
 {
-    return [self.dictionary objectForKey:key];
+    // if possible, retrieve image from dictionary
+    UIImage *result = self.dictionary[key];
+    
+    if (!result) {
+        NSString *imagePath = [self imagePathForKey:key];
+        
+        // create image from file
+        result = [UIImage imageWithContentsOfFile:imagePath];
+        
+        // if we found an image on file system, place it into cache
+        if (result) {
+            self.dictionary[key] = result;
+        }
+        else {
+            NSLog(@"Error: unable to find %@", [self imagePathForKey:key]);
+        }
+    }
+    
+    return result;
 }
 
 // delete imaege
@@ -74,8 +103,24 @@
         return;
     
     [self.dictionary removeObjectForKey:key];
+    
+    NSString *imagePath = [self imagePathForKey:key];
+    [[NSFileManager defaultManager] removeItemAtPath:imagePath
+                                               error:nil];
 }
 
+#pragma mark - Archiving methods
+- (NSString*)imagePathForKey:(NSString*) key
+{
+    NSArray *documentDirectories = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                                       NSUserDomainMask,
+                                                                       YES);
+    // get one document director from list
+    NSString *documentDirectory = [documentDirectories firstObject];
+    
+    // append file name to path
+    return [documentDirectory stringByAppendingPathComponent:key];
+}
 
 
 @end

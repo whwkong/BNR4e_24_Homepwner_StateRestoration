@@ -5,8 +5,10 @@ Big Nerd Ranch's iOS Programming 4th ed, Hillegass & Conway
 Ch 18 - Saving, Loading and Application States
 
 Homepwner app 
-- this app builds on the functionality of the Homepwner app from chapter 17. 
-- the app's model data is now archived - application state is now preserved.    
+- this app builds on the functionality of the Homepwner app from chapter 17.
+ 
+- the app's model data is now archived; model data is saved when app 
+transitions to background.
 
 -----------------------------------
 Tagging Conventions: 
@@ -20,4 +22,7 @@ Chapter 18 covers the following :
 
 - Archiving, NSKeyedArchiver and NSKeyedUnarchiver
 - Constructing File Paths and the Application Sandbox
+- Application States
+- Writing to the FileSystem with NSData
+- the Notification Center and Low Memory Warnings
 
