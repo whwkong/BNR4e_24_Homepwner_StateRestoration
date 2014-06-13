@@ -48,6 +48,12 @@
     
     if (self) {
         _dictionary = [[NSMutableDictionary alloc] init];
+        
+        NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+        [nc addObserver:self
+               selector:@selector(clearCache:)
+                   name:UIApplicationDidReceiveMemoryWarningNotification
+                 object:nil];
     }
     return self;
 }
@@ -109,7 +115,13 @@
                                                error:nil];
 }
 
-#pragma mark - Archiving methods
+#pragma mark - Archiving & cache methods
+- (void)clearCache:(NSNotification*)note
+{
+    NSLog(@"flushing %d images out of cache,", self.dictionary.count);
+    [self.dictionary removeAllObjects];
+}
+
 - (NSString*)imagePathForKey:(NSString*) key
 {
     NSArray *documentDirectories = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
