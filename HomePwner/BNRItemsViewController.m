@@ -10,6 +10,7 @@
 #import "BNRDetailViewController.h"
 #import "BNRItemStore.h"
 #import "BNRItem.h"
+#import "BNRItemCell.h"
 
 
 @interface BNRItemsViewController ()
@@ -54,11 +55,13 @@
 {
     [super viewDidLoad];
     
-    [self.tableView registerClass:[UITableViewCell class]
-           forCellReuseIdentifier:@"UITableViewCell"];
+    // Load the NIB file
+    UINib *nib = [UINib nibWithNibName:@"BNRItemCell" bundle:nil];
     
-    UIView *header = self.headerView;
-    [self.tableView setTableHeaderView:header];
+    // Note: Beginning in iOS 5, clients could only register NIBs.
+    // In iOS 6, clients could register a nib or class for each cell.
+    [self.tableView registerNib:nib
+         forCellReuseIdentifier:@"BNRItemCell"];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -104,14 +107,20 @@
         cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // get a cell from data pool
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UITableViewCell"
-                                                            forIndexPath:indexPath];
+    BNRItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"BNRItemCell" forIndexPath:indexPath];
+    
     
     // set text
     NSArray *items = [[BNRItemStore sharedStore] allItems];
     BNRItem *item = items[indexPath.row];
     
-    cell.textLabel.text = [item description];
+//    cell.textLabel.text = [item description];
+    
+    // configure cell with BNRItem
+    cell.nameLabel.text = item.itemName;
+    cell.serialNumberLabel.text = item.serialNumber;
+    cell.valueLabel.text = [NSString stringWithFormat:@"$%d", item.valueInDollars];
+
     
     return cell;
 }
