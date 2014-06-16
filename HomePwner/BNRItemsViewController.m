@@ -11,9 +11,12 @@
 #import "BNRItemStore.h"
 #import "BNRItem.h"
 #import "BNRItemCell.h"
+#import "BNRImageStore.h"
+#import "BNRImageViewController.h"
 
 
-@interface BNRItemsViewController ()
+@interface BNRItemsViewController () <UIPopoverControllerDelegate>
+@property (nonatomic, strong) UIPopoverController *imagePopover;
 
 @property (nonatomic, strong) IBOutlet UIView *headerView;
 
@@ -121,6 +124,43 @@
 
     cell.thumbnailView.image = item.thumbnail;
     
+    __weak BNRItemCell *weakCell = cell;
+    
+    // define completion block
+    cell.actionBlock = ^{
+        NSLog(@"Thumbnail image clicked, for %@", item);
+        
+        BNRItemCell *strongCell = weakCell;
+        
+        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+            NSString *itemKey = item.itemKey;
+            
+            // if there is no image; we don't need to display anything
+            UIImage *img = [[BNRImageStore sharedStore] imageForKey:itemKey];
+            
+            if (!img) {
+                return;
+            }
+            
+            // Make a rectangle for the frame of the thumbnail relative to our table view
+            CGRect rect = [self.view convertRect:strongCell.thumbnailView.bounds
+                                         fromView:strongCell.thumbnailView];
+            
+            // Create a new BNRImageViewController and set its image
+            BNRImageViewController *ivc = [[BNRImageViewController alloc] init];
+            ivc.image = img;
+            
+            // Present a 600x600 popover from the rect
+            self.imagePopover = [[UIPopoverController alloc] initWithContentViewController:ivc];
+            self.imagePopover.delegate = self;
+            self.imagePopover.popoverContentSize = CGSizeMake(600,600);
+            [self.imagePopover presentPopoverFromRect:rect
+                                               inView:self.view
+                             permittedArrowDirections:UIPopoverArrowDirectionAny
+                                             animated:YES];
+        }
+    };
+    
     return cell;
 }
 
@@ -168,6 +208,12 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath
     [self.navigationController pushViewController:dvc
                                          animated:YES];
     
+}
+
+#pragma mark - Popover delegate methods
+- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
+{
+    self.imagePopover = nil;
 }
 
 @end

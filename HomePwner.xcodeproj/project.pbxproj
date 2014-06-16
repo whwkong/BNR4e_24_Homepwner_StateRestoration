@@ -27,6 +27,7 @@
 		27558E47194B4F01003312C0 /* BNRItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 27558E46194B4F01003312C0 /* BNRItemCell.m */; };
 		279551DB192F81B900AF7746 /* BNRDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 279551D9192F81B900AF7746 /* BNRDetailViewController.m */; };
 		279551DC192F81B900AF7746 /* BNRDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 279551DA192F81B900AF7746 /* BNRDetailViewController.xib */; };
+		27A5BBCC194F695B0005AC4F /* BNRImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A5BBCB194F695B0005AC4F /* BNRImageViewController.m */; };
 		27AC1E70192A9C0C002EA5FC /* HeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27AC1E6F192A9C0C002EA5FC /* HeaderView.xib */; };
 /* End PBXBuildFile section */
 
@@ -71,6 +72,8 @@
 		279551D8192F81B900AF7746 /* BNRDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNRDetailViewController.h; sourceTree = "<group>"; };
 		279551D9192F81B900AF7746 /* BNRDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNRDetailViewController.m; sourceTree = "<group>"; };
 		279551DA192F81B900AF7746 /* BNRDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BNRDetailViewController.xib; sourceTree = "<group>"; };
+		27A5BBCA194F695B0005AC4F /* BNRImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNRImageViewController.h; sourceTree = "<group>"; };
+		27A5BBCB194F695B0005AC4F /* BNRImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNRImageViewController.m; sourceTree = "<group>"; };
 		27AC1E6F192A9C0C002EA5FC /* HeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HeaderView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -186,6 +189,8 @@
 		27558E3F194B4E0E003312C0 /* TableViewCell */ = {
 			isa = PBXGroup;
 			children = (
+				27A5BBCA194F695B0005AC4F /* BNRImageViewController.h */,
+				27A5BBCB194F695B0005AC4F /* BNRImageViewController.m */,
 				27558E45194B4F01003312C0 /* BNRItemCell.h */,
 				27558E46194B4F01003312C0 /* BNRItemCell.m */,
 				27558E43194B4E67003312C0 /* BNRItemCell.xib */,
@@ -308,6 +313,7 @@
 			files = (
 				279551DB192F81B900AF7746 /* BNRDetailViewController.m in Sources */,
 				27558E47194B4F01003312C0 /* BNRItemCell.m in Sources */,
+				27A5BBCC194F695B0005AC4F /* BNRImageViewController.m in Sources */,
 				271FB54B1927E7BA0089E50A /* BNRItemStore.m in Sources */,
 				2703181F1933BE7C00ED93D0 /* BNRImageStore.m in Sources */,
 				271FB5421927DFC60089E50A /* BNRItemsViewController.m in Sources */,

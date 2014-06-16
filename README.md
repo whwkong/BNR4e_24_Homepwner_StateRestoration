@@ -13,6 +13,10 @@ Chapter 19 covers the following :
 the item's contents, including displaying a thumbnail of the item's 
 image
 
+- Handling events and relaying actions from within UITableViewCells 
+
+- Handling variable capturing and preventing strong retain cycles within 
+completion blocks
 
 -----------------------------------
 Tagging Conventions: 
