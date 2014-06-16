@@ -109,18 +109,17 @@
     // get a cell from data pool
     BNRItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"BNRItemCell" forIndexPath:indexPath];
     
-    
     // set text
     NSArray *items = [[BNRItemStore sharedStore] allItems];
     BNRItem *item = items[indexPath.row];
     
-//    cell.textLabel.text = [item description];
     
     // configure cell with BNRItem
     cell.nameLabel.text = item.itemName;
     cell.serialNumberLabel.text = item.serialNumber;
     cell.valueLabel.text = [NSString stringWithFormat:@"$%d", item.valueInDollars];
 
+    cell.thumbnailView.image = item.thumbnail;
     
     return cell;
 }

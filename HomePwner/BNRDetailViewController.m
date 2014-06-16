@@ -256,6 +256,9 @@
     // get picked image from dictionary
     UIImage *image = info[UIImagePickerControllerOriginalImage];
     
+    [self.item setThumbnailFromImage:image];
+    
+    
     // store image in the BNRImageStore for this key
     [[BNRImageStore sharedStore] setImage:image
                                    forKey:self.item.itemKey];
