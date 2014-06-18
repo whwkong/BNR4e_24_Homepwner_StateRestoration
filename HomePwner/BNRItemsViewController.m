@@ -43,6 +43,12 @@
         navItem.rightBarButtonItem = bbi;
         
         navItem.leftBarButtonItem = self.editButtonItem;
+        
+        NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+        [defaultCenter addObserver:self
+                          selector:@selector(updateTableViewForDynamicTypeSize)
+                              name:UIContentSizeCategoryDidChangeNotification
+                            object:nil];
     }
     
     return self;
@@ -51,6 +57,12 @@
 - (instancetype)initWithStyle:(UITableViewStyle)style
 {
     return [self init];
+}
+
+- (void)dealloc 
+{
+    NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+    [defaultCenter removeObserver:self];
 }
 
 #pragma mark - View life cycle
@@ -71,7 +83,7 @@
 {
     [super viewWillAppear:animated];
     
-    [self.tableView reloadData];
+    [self updateTableViewForDynamicTypeSize];
     
 }
 
@@ -96,6 +108,30 @@
     navController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     
     [self presentViewController:navController animated:YES completion:nil];
+}
+
+#pragma mark - Dynamic Type
+- (void) updateTableViewForDynamicTypeSize
+{
+    static NSDictionary *cellHeightDictionary;
+    
+    if (!cellHeightDictionary) {
+        cellHeightDictionary = @{ UIContentSizeCategoryExtraSmall : @44,
+                                  UIContentSizeCategorySmall : @44,
+                                  UIContentSizeCategoryMedium : @44,
+                                  UIContentSizeCategoryLarge : @44,
+                                  UIContentSizeCategoryExtraLarge : @55,
+                                  UIContentSizeCategoryExtraExtraLarge : @65,
+                                  UIContentSizeCategoryExtraExtraExtraLarge : @75
+                                  };
+    }
+    
+    NSString *userSize = [[UIApplication sharedApplication] preferredContentSizeCategory];
+    
+    NSNumber *cellHeight = cellHeightDictionary[userSize];
+    [self.tableView setRowHeight:cellHeight.floatValue];
+    [self.tableView reloadData];
+    
 }
 
 #pragma mark - TableViewDataSource delegates
