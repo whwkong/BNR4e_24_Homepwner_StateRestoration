@@ -23,6 +23,10 @@
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cameraButton;
 
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *serialNumberLabel;
+@property (weak, nonatomic) IBOutlet UILabel *valueLabel;
+
 @end
 
 @implementation BNRDetailViewController
@@ -54,10 +58,23 @@
                                          initWithBarButtonSystemItem:UIBarButtonSystemItemDone
                                          target:self action:@selector(save:)];
             self.navigationItem.rightBarButtonItem = doneItem;
+            
         }
+        
+        NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+        [defaultCenter addObserver:self
+                          selector:@selector(updateFonts)
+                              name:UIContentSizeCategoryDidChangeNotification
+                            object:nil];
     }
     
     return self;
+}
+
+- (void)dealloc
+{
+    NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+    [defaultCenter removeObserver:self];
 }
 
 #pragma mark - View life cycle
@@ -132,6 +149,8 @@
     UIImage *img = [[BNRImageStore sharedStore] imageForKey:key];
     self.imageView.image = img;
     
+    [self updateFonts];
+    
     // Use filtered NSDate object to set dateLabel contents
     self.dateLabel.text = [dateFormatter stringFromDate:item.dateCreated];
 }
@@ -175,12 +194,27 @@
     [self prepareViewsForOrientation:toInterfaceOrientation];
 }
 
-#pragma mark - Property setter/getters
+#pragma mark - Setter/getters
 // override the default setter
 - (void)setItem:(BNRItem *)item
 {
     _item = item;
     self.navigationItem.title = _item.itemName;
+}
+
+#pragma mark - Dynamic Type Fonts
+- (void)updateFonts
+{
+    UIFont *font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+    
+    self.nameLabel.font = font;
+    self.serialNumberLabel.font = font;
+    self.valueLabel.font = font;
+    self.dateLabel.font = font;
+    
+    self.nameField.font = font;
+    self.serialNumberField.font = font;
+    self.valueField.font = font;
 }
 
 #pragma mark - Actions

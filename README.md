@@ -1,27 +1,21 @@
-BNR4e_Ch19_SubclassingUITableViewCell
-=====================================
+BNR4e_Ch20_DynamicType
+======================== 
 
 Big Nerd Ranch's iOS Programming 4th ed, Hillegass & Conway
-Ch 19 - Subclassing UITableViewCell
+Ch 20 - Dynamic Type
 
 Homepwner app 
-- this app builds on the functionality of the Homepwner app from chapter 18.
+- this app builds on the functionality of the Homepwner app from chapter 19.
 
-Chapter 19 covers the following :
+Chapter 20 covers the following :
 
-- Creating a subclass of UITableViewCell that customizes the display of 
-the item's contents, including displaying a thumbnail of the item's 
-image
-
-- Handling events and relaying actions from within UITableViewCells 
-
-- Handling variable capturing and preventing strong retain cycles within 
-completion blocks
+- Dynamic Typing 
+- Responding to Text Size changes dynamically 
 
 -----------------------------------
 Tagging Conventions: 
 
-Commits that correspond to the completion of a chapter will be tagged 0.4.x, 
+Commits that correspond to the completion of a chapter are tagged 0.4.x, 
 where x is the chapter number, and 4 represents the 4th edition of BNR. 
 
 -----------------------------------
