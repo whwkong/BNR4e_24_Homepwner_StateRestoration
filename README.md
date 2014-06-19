@@ -11,6 +11,7 @@ Chapter 20 covers the following :
 
 - Dynamic Typing 
 - Responding to Text Size changes dynamically 
+- Constraint outlets - modifying constraints at runtime
 
 -----------------------------------
 Tagging Conventions: 

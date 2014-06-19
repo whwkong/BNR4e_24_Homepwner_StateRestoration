@@ -14,7 +14,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LrM-oc-Gch">
-                        <rect key="frame" x="2" y="7" width="40" height="30"/>
+                        <rect key="frame" x="2" y="2" width="150" height="40"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <state key="normal">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -24,14 +24,14 @@
                         </connections>
                     </button>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cz1-xU-djr">
-                        <rect key="frame" x="52" y="0.0" width="203" height="23"/>
+                        <rect key="frame" x="162" y="0.0" width="93" height="23"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MMu-NB-xMo">
-                        <rect key="frame" x="52" y="28" width="203" height="14"/>
+                        <rect key="frame" x="162" y="28" width="93" height="14"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -44,10 +44,10 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6eE-Kt-OPu">
-                        <rect key="frame" x="2" y="7" width="40" height="30"/>
+                        <rect key="frame" x="2" y="2" width="150" height="40"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="40" id="jpT-0d-cxf"/>
+                            <constraint firstAttribute="height" constant="40" id="jpT-0d-cxf"/>
                         </constraints>
                     </imageView>
                 </subviews>
@@ -71,6 +71,7 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="imageViewHeightConstraint" destination="jpT-0d-cxf" id="Qu1-g4-NLy"/>
                 <outlet property="nameLabel" destination="cz1-xU-djr" id="jok-Be-CIE"/>
                 <outlet property="serialNumberLabel" destination="MMu-NB-xMo" id="Buj-GN-iep"/>
                 <outlet property="thumbnailView" destination="6eE-Kt-OPu" id="Bbp-Ce-FC3"/>
