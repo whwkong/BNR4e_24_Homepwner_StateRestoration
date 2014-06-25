@@ -1,17 +1,16 @@
-BNR4e_Ch20_DynamicType
+BNR4e_Ch23_CoreData
 ======================== 
 
 Big Nerd Ranch's iOS Programming 4th ed, Hillegass & Conway
-Ch 20 - Dynamic Type
+Ch 23 - Core Data
 
 Homepwner app 
-- this app builds on the functionality of the Homepwner app from chapter 19.
+- this app builds on the functionality of the Homepwner app from chapter 20.
 
-Chapter 20 covers the following :
-
-- Dynamic Typing 
-- Responding to Text Size changes dynamically 
-- Constraint outlets - modifying constraints at runtime
+Chapter 23 covers the following :
+- Object-Relational mapping
+- using Core Data (which uses SQLite) to incrementally update and reload data.
+- subclassing NSManagedObject  
 
 -----------------------------------
 Tagging Conventions: 
