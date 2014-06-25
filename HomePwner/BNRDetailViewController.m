@@ -7,6 +7,7 @@
 //
 
 #import "BNRDetailViewController.h"
+#import "BNRAssetTypeViewController.h"
 #import "BNRItem.h"
 #import "BNRItemStore.h"
 #import "BNRImageStore.h"
@@ -22,6 +23,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cameraButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *assetTypeButton;
 
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *serialNumberLabel;
@@ -149,6 +151,13 @@
     UIImage *img = [[BNRImageStore sharedStore] imageForKey:key];
     self.imageView.image = img;
     
+    NSString *typeLabel = [self.item.assetType valueForKey:@"label"];
+    if (!typeLabel) {
+        typeLabel = @"None";
+    }
+    
+    self.assetTypeButton.title = [NSString stringWithFormat:@"Type: %@", typeLabel];
+    
     [self updateFonts];
     
     // Use filtered NSDate object to set dateLabel contents
@@ -218,6 +227,42 @@
 }
 
 #pragma mark - Actions
+// called when user hits "Asset Type" barbutton item.
+- (IBAction)assetTypePicker:(id)sender
+{
+    [self.view endEditing:YES];
+    
+    BNRAssetTypeViewController *avc = [[BNRAssetTypeViewController alloc] init];
+    avc.item = self.item;
+    
+    [self.navigationController pushViewController:avc
+                                         animated:YES];
+}
+
+
+// called whenever user taps the background
+- (IBAction)backgroundTapped:(id)sender
+{
+    // use to make the view or any subview that is the first responder resign
+    [self.view endEditing:YES];
+}
+
+- (void)cancel:(id)sender
+{
+    // if user canceled, then remove BNRItem from store
+    [[BNRItemStore sharedStore] removeItem:self.item];
+    
+    [self.presentingViewController dismissViewControllerAnimated:YES
+                                                      completion:self.dismissBlock];
+    
+}
+
+- (void)save:(id)sender
+{
+    [self.presentingViewController dismissViewControllerAnimated:YES
+                                                      completion:self.dismissBlock];
+}
+
 // handler for camera button
 - (IBAction)takePicture:(id)sender
 {
@@ -257,29 +302,6 @@
     } else {
         [self presentViewController:imagePicker animated:YES completion:nil];
     }
-}
-
-// called whenever user taps the background
-- (IBAction)backgroundTapped:(id)sender
-{
-    // use to make the view or any subview that is the first responder resign
-    [self.view endEditing:YES];
-}
-
-- (void)save:(id)sender
-{
-    [self.presentingViewController dismissViewControllerAnimated:YES
-                                                      completion:self.dismissBlock];
-}
-
-- (void)cancel:(id)sender
-{
-    // if user canceled, then remove BNRItem from store
-    [[BNRItemStore sharedStore] removeItem:self.item];
-    
-    [self.presentingViewController dismissViewControllerAnimated:YES
-                                                      completion:self.dismissBlock];
-    
 }
 
 #pragma mark - ImagePickerController delegate

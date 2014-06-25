@@ -18,8 +18,8 @@
 // accessor to singleton
 + (instancetype)sharedStore;
 
-// item is created in store; item is returned.
-- (BNRItem*)createItem;
+- (NSArray *)allAssetTypes;
+- (BNRItem *)createItem;
 - (void)moveItemAtIndex:(NSUInteger)fromIndex
                 toIndex:(NSUInteger)toIndex;
 - (void)removeItem:(BNRItem*)item;

@@ -47,7 +47,7 @@
     return nil;
 }
 
-- (instancetype) initPrivate
+- (instancetype)initPrivate
 {
     self = [super init];
     
@@ -84,6 +84,50 @@
 }
 
 #pragma mark - Store methods
+- (NSArray *)allAssetTypes
+{
+    if (!_allAssetTypes) {
+        NSFetchRequest *request = [[NSFetchRequest alloc] init];
+        
+        NSEntityDescription *e = [NSEntityDescription entityForName:@"BNRAssetType"
+                                             inManagedObjectContext:self.context];
+        request.entity = e;
+        
+        NSError *error = nil;
+        NSArray *result = [self.context executeFetchRequest:request
+                                                      error:&error];
+        if (!result) {
+            [NSException raise:@"Fetch failed"
+                        format:@"Reason: %@", [error localizedDescription]];
+        }
+        
+        _allAssetTypes = [result mutableCopy];
+    }
+    
+    // Is this the first time the program is being run?
+    // Initialize asset types
+    if ([_allAssetTypes count] == 0) {
+        NSManagedObject *type;
+        
+        type = [NSEntityDescription insertNewObjectForEntityForName:@"BNRAssetType"
+                                             inManagedObjectContext:self.context];
+        [type setValue:@"Furniture" forKey:@"label"];
+        [_allAssetTypes addObject:type];
+        
+        type = [NSEntityDescription insertNewObjectForEntityForName:@"BNRAssetType"
+                                             inManagedObjectContext:self.context];
+        [type setValue:@"Jewelry" forKey:@"label"];
+        [_allAssetTypes addObject:type];
+        
+        type = [NSEntityDescription insertNewObjectForEntityForName:@"BNRAssetType"
+                                             inManagedObjectContext:self.context];
+        [type setValue:@"Electronics" forKey:@"label"];
+        [_allAssetTypes addObject:type];
+    }
+    
+    return _allAssetTypes;
+}
+
 -(NSArray*) allItems
 {
     return self.privateItems;

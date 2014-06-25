@@ -27,6 +27,7 @@
 		27827C071959EF50006F171B /* Homepwner.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 27827C051959EF50006F171B /* Homepwner.xcdatamodeld */; };
 		27827C0B1959F11F006F171B /* BNRImageTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 27827C0A1959F11F006F171B /* BNRImageTransformer.m */; };
 		27827C0E195A17F6006F171B /* BNRItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 27827C0D195A17F6006F171B /* BNRItem.m */; };
+		27827C13195B5A12006F171B /* BNRAssetTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27827C12195B5A12006F171B /* BNRAssetTypeViewController.m */; };
 		279551DB192F81B900AF7746 /* BNRDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 279551D9192F81B900AF7746 /* BNRDetailViewController.m */; };
 		279551DC192F81B900AF7746 /* BNRDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 279551DA192F81B900AF7746 /* BNRDetailViewController.xib */; };
 		27A5BBCC194F695B0005AC4F /* BNRImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A5BBCB194F695B0005AC4F /* BNRImageViewController.m */; };
@@ -75,6 +76,8 @@
 		27827C0C195A17F6006F171B /* BNRItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNRItem.h; sourceTree = "<group>"; };
 		27827C0D195A17F6006F171B /* BNRItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNRItem.m; sourceTree = "<group>"; };
 		27827C0F195A1CE7006F171B /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		27827C11195B5A12006F171B /* BNRAssetTypeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNRAssetTypeViewController.h; sourceTree = "<group>"; };
+		27827C12195B5A12006F171B /* BNRAssetTypeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNRAssetTypeViewController.m; sourceTree = "<group>"; };
 		279551D8192F81B900AF7746 /* BNRDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNRDetailViewController.h; sourceTree = "<group>"; };
 		279551D9192F81B900AF7746 /* BNRDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNRDetailViewController.m; sourceTree = "<group>"; };
 		279551DA192F81B900AF7746 /* BNRDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BNRDetailViewController.xib; sourceTree = "<group>"; };
@@ -184,10 +187,14 @@
 		271FB54C1927E7C00089E50A /* Model & Stores Objects */ = {
 			isa = PBXGroup;
 			children = (
+				27827C0C195A17F6006F171B /* BNRItem.h */,
+				27827C0D195A17F6006F171B /* BNRItem.m */,
 				271FB5491927E7BA0089E50A /* BNRItemStore.h */,
 				271FB54A1927E7BA0089E50A /* BNRItemStore.m */,
 				2703181D1933BE7C00ED93D0 /* BNRImageStore.h */,
 				2703181E1933BE7C00ED93D0 /* BNRImageStore.m */,
+				27827C11195B5A12006F171B /* BNRAssetTypeViewController.h */,
+				27827C12195B5A12006F171B /* BNRAssetTypeViewController.m */,
 			);
 			name = "Model & Stores Objects";
 			sourceTree = "<group>";
@@ -206,8 +213,6 @@
 			isa = PBXGroup;
 			children = (
 				27827C051959EF50006F171B /* Homepwner.xcdatamodeld */,
-				27827C0C195A17F6006F171B /* BNRItem.h */,
-				27827C0D195A17F6006F171B /* BNRItem.m */,
 				27827C091959F11F006F171B /* BNRImageTransformer.h */,
 				27827C0A1959F11F006F171B /* BNRImageTransformer.m */,
 			);
@@ -331,6 +336,7 @@
 			files = (
 				279551DB192F81B900AF7746 /* BNRDetailViewController.m in Sources */,
 				27827C0E195A17F6006F171B /* BNRItem.m in Sources */,
+				27827C13195B5A12006F171B /* BNRAssetTypeViewController.m in Sources */,
 				27558E47194B4F01003312C0 /* BNRItemCell.m in Sources */,
 				27A5BBCC194F695B0005AC4F /* BNRImageViewController.m in Sources */,
 				271FB54B1927E7BA0089E50A /* BNRItemStore.m in Sources */,
