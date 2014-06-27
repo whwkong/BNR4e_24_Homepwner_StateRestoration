@@ -1,16 +1,15 @@
-BNR4e_Ch23_CoreData
+BNR4e_Ch24_Homepwner
 ======================== 
 
 Big Nerd Ranch's iOS Programming 4th ed, Hillegass & Conway
-Ch 23 - Core Data
+Ch 24 - State Restoration
 
 Homepwner app 
-- this app builds on the functionality of the Homepwner app from chapter 20.
+- this app builds on the functionality of the Homepwner app from chapter 23.
 
-Chapter 23 covers the following :
-- Object-Relational mapping
-- using Core Data (which uses SQLite) to incrementally update and reload data.
-- subclassing NSManagedObject  
+Chapter 24 covers the following :
+- State Restoration Life Cycle
+- Restoration Identifiers and Classes
 
 -----------------------------------
 Tagging Conventions: 

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface BNRImageViewController : UIViewController
+@interface BNRImageViewController : UIViewController 
 @property (nonatomic, strong) UIImage *image;
 
 @end

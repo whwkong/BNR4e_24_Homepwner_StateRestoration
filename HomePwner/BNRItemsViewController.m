@@ -25,6 +25,12 @@
 
 @implementation BNRItemsViewController
 
++ (UIViewController *)viewControllerWithRestorationIdentifierPath:(NSArray *)path
+                                                            coder:(NSCoder *)coder
+{
+    return [[self alloc] init];
+}
+
 #pragma mark - Controller life cycle
 - (instancetype)init
 {
@@ -34,6 +40,10 @@
     if (self) {
         UINavigationItem *navItem = self.navigationItem;
         navItem.title = @"Homepwner";
+        
+        // Create restoration id
+        self.restorationIdentifier = NSStringFromClass([self class]);
+        self.restorationClass = [self class];
         
         // Create new bar button item that will send addNewItem to BNRItemsViewController
         UIBarButtonItem *bbi = [[UIBarButtonItem alloc]
@@ -103,6 +113,8 @@
     UINavigationController *navController = [[UINavigationController alloc]
                                              initWithRootViewController:detailViewController];
     
+    // set restoration ids
+    navController.restorationIdentifier = NSStringFromClass([navController class]);
     
     navController.modalPresentationStyle = UIModalPresentationFormSheet;
     navController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;

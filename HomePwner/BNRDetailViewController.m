@@ -33,6 +33,16 @@
 
 @implementation BNRDetailViewController
 
++ (UIViewController *)viewControllerWithRestorationIdentifierPath:(NSArray *)path
+                                                            coder:(NSCoder *)coder
+{
+    BOOL isNew = NO;
+    if ([path count] == 3) {
+        isNew = YES;
+    }
+    
+    return [[self alloc] initForNewItem:isNew];
+}
 
 #pragma mark - Controller life cycle
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -49,6 +59,10 @@
 {
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
+        // set restoration ids
+        self.restorationIdentifier = NSStringFromClass([self class]);
+        self.restorationClass = [self class];
+        
         if (isNew) {
             UIBarButtonItem *cancelItem = [[UIBarButtonItem alloc]
                                            initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
@@ -178,6 +192,32 @@
     item.valueInDollars = [self.valueField.text intValue];
     
 }
+
+#pragma mark - State Restoration
+- (void)encodeRestorableStateWithCoder:(NSCoder *)coder
+{
+    [coder encodeObject:self.item.itemKey forKey:@"item.itemKey"];
+    
+    // Save changes into item
+    
+    
+    [super encodeRestorableStateWithCoder:coder];
+}
+
+- (void)decodeRestorableStateWithCoder:(NSCoder *)coder
+{
+    NSString *itemKey = [coder decodeObjectForKey:@"item.itemKey"];
+    
+    for (BNRItem *item in [[BNRItemStore sharedStore] allItems]) {
+        if ([itemKey isEqualToString:item.itemKey]) {
+            self.item = item;
+            break;
+        }
+    }
+
+    [super decodeRestorableStateWithCoder:coder];
+}
+
 
 #pragma mark - Rotation handlers
 - (void)prepareViewsForOrientation:(UIInterfaceOrientation)orientation

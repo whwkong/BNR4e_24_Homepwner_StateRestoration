@@ -14,25 +14,35 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    // Override point for customization after application launch.
     NSLog(@"%@", NSStringFromSelector(_cmd));
     
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
+    // If state restoration did not occur, set up view controller hierarchy
+    if (!self.window.rootViewController) {
+        // create our view-controller
+        BNRItemsViewController *ivc = [[BNRItemsViewController alloc] init];
+        
+        // Create an instance of a UINavigationController
+        // its stack contains only itemsViewController
+        UINavigationController *navController = [[UINavigationController alloc]
+                                                 initWithRootViewController:ivc];
+        
+        // Give navigation controller a restoration identifier that is the
+        // same name as the class
+        navController.restorationIdentifier = NSStringFromClass([navController class]);
+        
+        self.window.rootViewController = navController;
+    }
     
-    // create our view-controller
-    BNRItemsViewController *ivc = [[BNRItemsViewController alloc] init];
-    
-    // Create an instance of a UINavigationController
-    // its stack contains only itemsViewController
-    UINavigationController *navController = [[UINavigationController alloc]
-                                             initWithRootViewController:ivc];
-    self.window.rootViewController = navController;
-    
-    // Place BNRItemsViewController's table view in the window hierarchy.
-    // self.window.rootViewController = ivc;
-    
-    self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    return YES;
+}
+
+- (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.backgroundColor = [UIColor whiteColor];
+    
     return YES;
 }
 
@@ -79,4 +89,32 @@
     NSLog(@"%@", NSStringFromSelector(_cmd));
 }
 
+- (BOOL)application:(UIApplication *)application shouldSaveApplicationState:(NSCoder *)coder
+{
+    return YES;
+}
+
+- (BOOL)application:(UIApplication *)application shouldRestoreApplicationState:(NSCoder *)coder
+{
+    return YES;
+}
+
+- (UIViewController *)application:(UIApplication *)application
+    viewControllerWithRestorationIdentifierPath:(NSArray *)identifierComponents
+                            coder:(NSCoder *)coder
+{
+    // Create a new navigation controller
+    UIViewController *vc = [[UINavigationController alloc] init];
+    
+    // the last object in the path array is the restoration
+    // identifier for this view controller
+    vc.restorationIdentifier = [identifierComponents lastObject];
+    
+    // If there is only 1 identifier component, then this is the root view controller
+    if ([identifierComponents count] == 1) {
+        self.window.rootViewController = vc;
+    }
+    
+    return vc; 
+}
 @end
