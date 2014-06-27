@@ -196,10 +196,16 @@
 #pragma mark - State Restoration
 - (void)encodeRestorableStateWithCoder:(NSCoder *)coder
 {
-    [coder encodeObject:self.item.itemKey forKey:@"item.itemKey"];
+    [coder encodeObject:self.item.itemKey
+                 forKey:@"item.itemKey"];
     
-    // Save changes into item
+    // Save changes into item - whatever the text fields currently hold
+    self.item.itemName = self.nameField.text;
+    self.item.serialNumber = self.serialNumberField.text;
+    self.item.valueInDollars = [self.valueField.text intValue];
     
+    // Save store changes to disk
+    [[BNRItemStore sharedStore] saveChanges];
     
     [super encodeRestorableStateWithCoder:coder];
 }
@@ -208,6 +214,7 @@
 {
     NSString *itemKey = [coder decodeObjectForKey:@"item.itemKey"];
     
+    // find the item in the store ...
     for (BNRItem *item in [[BNRItemStore sharedStore] allItems]) {
         if ([itemKey isEqualToString:item.itemKey]) {
             self.item = item;
