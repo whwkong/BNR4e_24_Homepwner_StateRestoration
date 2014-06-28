@@ -87,6 +87,9 @@
     // In iOS 6, clients could register a nib or class for each cell.
     [self.tableView registerNib:nib
          forCellReuseIdentifier:@"BNRItemCell"];
+    
+    // restore tableview's state
+    self.tableView.restorationIdentifier = @"BNRItemsViewControllerTableView";
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -143,7 +146,56 @@
     NSNumber *cellHeight = cellHeightDictionary[userSize];
     [self.tableView setRowHeight:cellHeight.floatValue];
     [self.tableView reloadData];
+}
+
+#pragma mark - State Restoration
+- (void)encodeRestorableStateWithCoder:(NSCoder *)coder
+{
+    // track whether we're in editing mode
+    [coder encodeBool:self.isEditing forKey:@"TableViewIsEditing"];
     
+    [super encodeRestorableStateWithCoder:coder];
+}
+
+- (void)decodeRestorableStateWithCoder:(NSCoder *)coder
+{
+    // were we in editing mode?
+    self.editing = [coder decodeBoolForKey:@"TableViewIsEditing"];
+    
+    [super decodeRestorableStateWithCoder:coder];
+}
+
+- (NSString *)modelIdentifierForElementAtIndexPath:(NSIndexPath *)idx
+                                            inView:(UIView *)view
+{
+    NSString *identifier = nil;
+    
+    if (idx && view) {
+        // return an identifier of the given NSIndexPath
+        // in case next time the data source changes
+        BNRItem *item = [[BNRItemStore sharedStore] allItems][idx.row];
+        identifier = item.itemKey;
+    }
+    
+    return identifier;
+}
+
+- (NSIndexPath *)indexPathForElementWithModelIdentifier:(NSString *)identifier
+                                                 inView:(UIView *)view
+{
+    NSIndexPath *indexPath = nil;
+    
+    if (identifier && view) {
+        NSArray *items = [[BNRItemStore sharedStore] allItems];
+        for (BNRItem *item in items) {
+            if ([identifier isEqualToString:item.itemKey]) {
+                int row = [items indexOfObjectIdenticalTo:item];
+                indexPath = [NSIndexPath indexPathForRow:row inSection:0];
+                break;
+            }
+        }
+    }
+    return indexPath;
 }
 
 #pragma mark - TableViewDataSource delegates

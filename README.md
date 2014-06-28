@@ -8,8 +8,9 @@ Homepwner app
 - this app builds on the functionality of the Homepwner app from chapter 23.
 
 Chapter 24 covers the following :
-- State Restoration Life Cycle
 - Restoration Identifiers and Classes
+- Restoring View Controllers
+- Saving View States
 
 -----------------------------------
 Tagging Conventions: 

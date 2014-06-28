@@ -8,5 +8,5 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BNRItemsViewController : UITableViewController <UIViewControllerRestoration>
+@interface BNRItemsViewController : UITableViewController <UIViewControllerRestoration, UIDataSourceModelAssociation>
 @end
